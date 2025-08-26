@@ -1,0 +1,49 @@
+html,
+body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    /* Ensure the body takes the full height */
+}
+
+h1 {
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: right;
+    font-size: small;
+    display: none;
+}
+
+/*#button {
+    position: absolute;
+    top: 50%; 
+    left: 50%; 
+    transform: translate(-50%, -50%); 
+    height: 40px;
+    width: 120px;
+    background-color: silver;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    z-index: 10;
+}*/
+
+#bar {
+    height: 100px;
+    width: 100%;
+    align-items: center;
+    display: flex;
+    background-color: #faebd7;
+    overflow-x: auto
+}
+
+#game {
+    display: flex;
+    flex-direction: row;
+    height: calc(100% - 100px);
+}
+
+#canvas {
+    flex-grow: 1;
+    background-color: burlywood;
+}
