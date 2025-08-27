@@ -2,7 +2,7 @@
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 const bar = document.getElementById("bar");
-const button = document.getElementById("button");
+const tooltip = document.getElementById('custom-tooltip');
 
 // Have the canvas take up all of window, but for height leave the bottom row to
 // be for the bar
@@ -18,7 +18,7 @@ let selectedItem = null;
 const supplies = [
     {
         name: "oven",
-        src: "ingredients/oven.jpg",
+        src: "ingredients/Oven.png",
         width: 120,
         height: 120,
         x: null,
@@ -28,7 +28,7 @@ const supplies = [
     },
     {
         name: "pot",
-        src: "ingredients/pot.jpg",
+        src: "ingredients/Pot.png",
         width: 120,
         height: 120,
         x: null,
@@ -38,7 +38,7 @@ const supplies = [
     },
     {
         name: "pan",
-        src: "ingredients/pan.jpg",
+        src: "ingredients/Pan.png",
         width: 120,
         height: 120,
         x: null,
@@ -48,7 +48,7 @@ const supplies = [
     },
     {
         name: "mixing bowl",
-        src: "ingredients/mixing bowl.webp",
+        src: "ingredients/Bowl.png",
         width: 120,
         height: 120,
         x: null,
@@ -62,43 +62,47 @@ const supplies = [
 const allItems = [
     {
         name: "egg",
-        src: "ingredients/egg.webp",
+        src: "ingredients/Egg.png",
         width: 80,
         height: 80,
         x: null,
         y: null,
         dragging: false,
-        image: null
+        image: null,
+        nutrition: "Calories 78\nProtein 6g"
     },
     {
         name: "sugar",
-        src: "ingredients/sugar.webp",
+        src: "ingredients/Sugar.png",
         width: 80,
         height: 80,
         x: null,
         y: null,
         dragging: false,
-        image: null
+        image: null,
+        nutrition: "(100g)\nCalories 387"
     },
     {
         name: "peanut butter",
-        src: "ingredients/peanut butter.png",
+        src: "ingredients/Peanut_Butter.png",
         width: 80,
         height: 80,
         x: null,
         y: null,
         dragging: false,
-        image: null
+        image: null,
+        nutrition: "(2 tbsp)\nCalories 190\nFat 16g\nProtein 8g\nCarbohydrates 7g\nFiber 3g\nSugar 2g"
     },
     {
         name: "peanut butter mix",
-        src: "ingredients/peanut butter mix.png",
+        src: "ingredients/Peanut_Butter_Mix.png",
         width: 80,
         height: 80,
         x: null,
         y: null,
         dragging: false,
-        image: null
+        image: null,
+        nutrition: "(2 tbsp)\nCalories 210\nFat 12g\nProtein 6g\nCarbohydrates 17g\nSugar 12g\nFiber 2g"
     },
     {
         name: "peanut butter cookies",
@@ -108,7 +112,96 @@ const allItems = [
         x: null,
         y: null,
         dragging: false,
-        image: null
+        image: null,
+        nutrition: "(1 cookie)\nCalories 180\nFat 10g\nProtein 4g\nCarbohydrates 18g\nSugar 14g\nFiber 1g"
+    },
+    {
+        name: "water",
+        src: "ingredients/Water.png",
+        width: 80,
+        height: 80,
+        x: null,
+        y: null,
+        dragging: false,
+        image: null,
+        nutrition: "Calories 0"
+    },
+    {
+        name: "rice",
+        src: "ingredients/Rice.png",
+        width: 80,
+        height: 80,
+        x: null,
+        y: null,
+        dragging: false,
+        image: null,
+        nutrition: "(100g dry)\nCalories 365\nCarbohydrates 80g\nProtein 7g\nFat 0.6g"
+    },
+    {
+        name: "cooked rice",
+        src: "ingredients/Cooked_Rice.png",
+        width: 80,
+        height: 80,
+        x: null,
+        y: null,
+        dragging: false,
+        image: null,
+        nutrition: "(100g cooked)\nCalories 130\nCarbohydrates 28g\nProtein 2.7g\nFat 0.3g"
+    },
+    {
+        name: "boiled egg",
+        src: "ingredients/Boiled_Egg.png",
+        width: 80,
+        height: 80,
+        x: null,
+        y: null,
+        dragging: false,
+        image: null,
+        nutrition: "Calories 78\nProtein 6g\nFat 5g"
+    },
+    {
+        name: "egg mix",
+        src: "ingredients/Egg_Mix.png",
+        width: 80,
+        height: 80,
+        x: null,
+        y: null,
+        dragging: false,
+        image: null,
+        nutrition: "(1 serving)\nCalories 85\nProtein 6g\nFat 6g"
+    },
+    {
+        name: "omelette",
+        src: "ingredients/Omelette.png",
+        width: 80,
+        height: 80,
+        x: null,
+        y: null,
+        dragging: false,
+        image: null,
+        nutrition: "(1 omelette)\nCalories 150\nProtein 10g\nFat 12g"
+    },
+    {
+        name: "omurice",
+        src: "ingredients/Omurice.png",
+        width: 80,
+        height: 80,
+        x: null,
+        y: null,
+        dragging: false,
+        image: null,
+        nutrition: "(1 serving)\nCalories 350\nProtein 12g\nFat 14g\nCarbohydrates 40g"
+    },
+    {
+        name: "fried egg",
+        src: "ingredients/Fried_Egg.png",
+        width: 80,
+        height: 80,
+        x: null,
+        y: null,
+        dragging: false,
+        image: null,
+        nutrition: "Calories 90\nProtein 6g\nFat 7g"
     }
 ];
 
@@ -116,51 +209,63 @@ const allItems = [
 const discoveredItems = [
     {
         name: "egg",
-        src: "ingredients/egg.webp",
+        src: "ingredients/Egg.png",
         width: 80,
         height: 80,
         x: null,
         y: null,
         dragging: false,
-        image: null
+        image: null,
+        nutrition: "Calories 78g\nProtein 6g"
     },
     {
         name: "sugar",
-        src: "ingredients/sugar.webp",
+        src: "ingredients/Sugar.png",
         width: 80,
         height: 80,
         x: null,
         y: null,
         dragging: false,
-        image: null
+        image: null,
+        nutrition: "(100g)\nCalories 387"
     },
     {
         name: "peanut butter",
-        src: "ingredients/peanut butter.png",
+        src: "ingredients/Peanut_Butter.png",
         width: 80,
         height: 80,
         x: null,
         y: null,
         dragging: false,
-        image: null
+        image: null,
+        nutrition: "(2tbsp)\nCalories 190\nFat 16g\nProtein 8g\nCarbohydrates 7g\nFiber 3g\nSugar 2g"
+    },
+    {
+        name: "rice",
+        src: "ingredients/Rice.png",
+        width: 80,
+        height: 80,
+        x: null,
+        y: null,
+        dragging: false,
+        image: null,
+        nutrition: "(100g dry)\nCalories 365\nCarbohydrates 80g\nProtein 7g\nFat 0.6g"
+    },
+    {
+        name: "water",
+        src: "ingredients/Water.png",
+        width: 80,
+        height: 80,
+        x: null,
+        y: null,
+        dragging: false,
+        image: null,
+        nutrition: "Calories 0"
     }
 ]
 
 // default to be empty until player begins and discovers recipes
 let draggedItems = [];
-let potItems = [];
-let panItems = [];
-let mixingBowlItems = [{
-    name: "peanut butter mix",
-    src: "ingredients/peanut butter mix.png",
-    width: 80,
-    height: 80,
-    x: null,
-    y: null,
-    dragging: false,
-    image: null
-}];
-let ovenItems = [];
 
 // Loads supplies right at the start
 function preloadImages() {
@@ -196,6 +301,24 @@ function preloadImages() {
         image.height = 80;
         image.draggable = true;
         image.className = item.name;
+
+        // Event: Show tooltip
+        image.addEventListener('mouseenter', (e) => {
+            tooltip.textContent = "Nutrition Facts\n" + item.nutrition;
+            tooltip.style.display = 'block';
+        });
+
+        // Event: Move tooltip with cursor
+        image.addEventListener('mousemove', (e) => {
+            tooltip.style.left = (e.clientX + 10) + 'px';
+            tooltip.style.top = (e.clientY - 150) + 'px';
+        });
+
+        // Event: Hide tooltip
+        image.addEventListener('mouseleave', () => {
+            tooltip.style.display = 'none';
+        });
+
         bar.appendChild(image);
     });
 }
@@ -206,6 +329,8 @@ addEventListener("dragstart", (event) => {
     dragged = event.target.className;
     offsetX = event.offsetX;
     offsetY = event.offsetY;
+    event.dataTransfer.setData("text/plain", dragged);
+
 });
 
 canvas.addEventListener("dragover", (event) => {
@@ -297,8 +422,33 @@ const combinations = [
     {
         name: "peanut butter cookies",
         ingredients: ["peanut butter mix", "oven"]
+    },
+    {
+        name: "boiled egg",
+        ingredients: ["egg", "water", "pot"]
+    },
+    {
+        name: "cooked rice",
+        ingredients: ["rice", "water", "pot"]
+    },
+    {
+        name: "egg mix",
+        ingredients: ["egg", "mixing bowl"]
+    },
+    {
+        name: "omelette",
+        ingredients: ["egg mix", "pan"]
+    },
+    {
+        name: "omurice",
+        ingredients: ["cooked rice", "egg mix", "pan"]
+    },
+    {
+        name: "fried egg",
+        ingredients: ["egg", "pan"]
     }
-]
+];
+
 
 function isOverlapping(x1, y1, x2, y2, width1, width2) {
     if (y1 + width1 < y2 || x1 + width1 < x2 || y2 + width2 < y1 || x2 + width2 < x1) {
@@ -367,23 +517,38 @@ function checkCombine(selected) {
         x: selected.x,
         y: selected.y,
         dragging: false,
-        image: allItems.image
+        image: allItems.image,
+        nutrition: item.nutrition
     }
     newItem.image = new Image();
     newItem.image.src = newItem.src;
     newItem.image.width = 80;
     newItem.image.height = 80;
     newItem.image.draggable = true;
-    newItem.image.className = item.name;
+    newItem.image.className = newItem.name;
+
+    newItem.image.addEventListener('mouseenter', (e) => {
+        tooltip.textContent = "Nutrition Facts\n" + newItem.nutrition;
+        tooltip.style.display = 'block';
+    });
+
+    newItem.image.addEventListener('mousemove', (e) => {
+        tooltip.style.left = (e.clientX + 10) + 'px';
+        tooltip.style.top = (e.clientY - 150) + 'px';
+    });
+
+    newItem.image.addEventListener('mouseleave', () => {
+        tooltip.style.display = 'none';
+    });
+
     newItem.image.onload = () => {
         draggedItems.push(newItem);
-        if (!discoveredItems.find((item) => {
-            return item.name === newItem.name;
-        })) {
+
+        if (!discoveredItems.find((item) => item.name === newItem.name)) {
             bar.appendChild(newItem.image);
             discoveredItems.push(newItem);
-            mixingBowlItems.push(newItem);
         }
+
         drawItems();
     };
     return true;

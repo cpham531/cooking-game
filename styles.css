@@ -47,3 +47,18 @@ h1 {
     flex-grow: 1;
     background-color: burlywood;
 }
+
+#custom-tooltip {
+    position: fixed;
+    display: none;
+    pointer-events: none;
+    background-color: rgba(255, 255, 255, 1);
+    color: #000;
+    padding: 6px 10px;
+    border-radius: 5px;
+    font-size: 20px;
+    font-family: "Quicksand";
+    z-index: 1000;
+    max-width: 200px;
+    white-space: pre-wrap;
+}
